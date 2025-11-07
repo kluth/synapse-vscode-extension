@@ -1,0 +1,1 @@
+# synapse-vscode-extension

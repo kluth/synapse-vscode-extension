@@ -1,0 +1,1979 @@
+title,body,labels,milestone
+"1.1: Initialize package.json with VSCode extension metadata and dependencies","## Description
+
+Set up package.json with all necessary VSCode extension fields including:
+- Extension metadata (name, displayName, description, version, publisher)
+- VSCode engine compatibility
+- Activation events
+- Dependencies (@vscode/test-electron, typescript, webpack/esbuild, etc.)
+- Development dependencies (ESLint, Prettier, Jest, ts-node, etc.)
+
+## Acceptance Criteria
+
+- [ ] package.json has all required VSCode extension fields
+- [ ] VSCode engine version is set (e.g., ^1.80.0)
+- [ ] All necessary dependencies are listed
+- [ ] Scripts for build, test, lint, format are defined
+- [ ] License field is set (MIT)
+
+## References
+
+- [VSCode Extension Manifest](https://code.visualstudio.com/api/references/extension-manifest)","phase:setup,type:infrastructure,priority:high","Phase 1: Project Setup & Infrastructure"
+"1.2: Configure TypeScript (tsconfig.json) with strict mode for VSCode extension","## Description
+
+Create tsconfig.json with strict TypeScript configuration optimized for VSCode extension development.
+
+## Acceptance Criteria
+
+- [ ] Strict mode enabled (strict: true)
+- [ ] Target ES2020 or later
+- [ ] Module resolution set to Node16
+- [ ] Proper include/exclude patterns
+- [ ] Source maps enabled for debugging
+- [ ] Declaration files generated
+
+## Configuration
+
+```json
+{
+  ""compilerOptions"": {
+    ""module"": ""Node16"",
+    ""target"": ""ES2020"",
+    ""outDir"": ""out"",
+    ""lib"": [""ES2020""],
+    ""sourceMap"": true,
+    ""strict"": true,
+    ""esModuleInterop"": true,
+    ""skipLibCheck"": true,
+    ""forceConsistentCasingInFileNames"": true
+  }
+}
+```","phase:setup,type:infrastructure","Phase 1: Project Setup & Infrastructure"
+"1.3: Set up ESLint with recommended VSCode extension rules","## Description
+
+Configure ESLint with TypeScript support and VSCode extension recommended rules.
+
+## Acceptance Criteria
+
+- [ ] ESLint installed with TypeScript parser
+- [ ] @typescript-eslint/parser and plugin configured
+- [ ] eslint-plugin-vscode extension rules applied
+- [ ] .eslintrc.json or .eslintrc.js created
+- [ ] npm run lint script works without errors
+
+## Dependencies
+
+- eslint
+- @typescript-eslint/parser
+- @typescript-eslint/eslint-plugin
+- eslint-plugin-import","phase:setup,type:infrastructure","Phase 1: Project Setup & Infrastructure"
+"1.4: Configure Prettier for consistent code formatting","## Description
+
+Set up Prettier with configuration that works well with TypeScript and ESLint.
+
+## Acceptance Criteria
+
+- [ ] Prettier installed
+- [ ] .prettierrc.json created with project standards
+- [ ] .prettierignore created
+- [ ] ESLint-Prettier integration configured (eslint-config-prettier)
+- [ ] npm run format script works
+
+## Configuration
+
+- Single quotes: true
+- Trailing comma: es5
+- Tab width: 2
+- Semi: true
+- Print width: 100","phase:setup,type:infrastructure","Phase 1: Project Setup & Infrastructure"
+"1.5: Create .gitignore with node_modules, out, dist, .vscode-test","## Description
+
+Create comprehensive .gitignore file for VSCode extension development.
+
+## Acceptance Criteria
+
+- [ ] node_modules/ ignored
+- [ ] out/ and dist/ ignored
+- [ ] .vscode-test/ ignored
+- [ ] *.vsix files ignored
+- [ ] Coverage reports ignored
+- [ ] OS-specific files ignored (.DS_Store, Thumbs.db)
+- [ ] IDE files ignored (.idea/, *.swp)","phase:setup,type:infrastructure","Phase 1: Project Setup & Infrastructure"
+"1.6: Set up Jest testing framework with TypeScript support","## Description
+
+Configure Jest for unit testing with TypeScript support.
+
+## Acceptance Criteria
+
+- [ ] Jest installed with ts-jest
+- [ ] jest.config.js created
+- [ ] TypeScript integration working
+- [ ] Test script in package.json
+- [ ] Sample test file runs successfully
+
+## Dependencies
+
+- jest
+- ts-jest
+- @types/jest
+
+## Configuration
+
+- Test match: **/__tests__/**/*.test.ts
+- Coverage threshold: 80%","phase:setup,type:infrastructure,priority:high","Phase 1: Project Setup & Infrastructure"
+"1.7: Configure VSCode extension test runner (@vscode/test-electron)","## Description
+
+Set up VSCode extension integration testing with @vscode/test-electron.
+
+## Acceptance Criteria
+
+- [ ] @vscode/test-electron installed
+- [ ] Test runner script created in src/test/
+- [ ] Integration test setup complete
+- [ ] Can run tests in VSCode Extension Host
+- [ ] npm run test:integration script works
+
+## References
+
+- [Testing Extensions](https://code.visualstudio.com/api/working-with-extensions/testing-extension)","phase:setup,type:infrastructure,priority:high","Phase 1: Project Setup & Infrastructure"
+"1.8: Create src/ directory structure (extension.ts, commands/, providers/, utils/)","## Description
+
+Create organized source code directory structure for the extension.
+
+## Acceptance Criteria
+
+- [ ] src/ directory created
+- [ ] src/extension.ts created (entry point)
+- [ ] src/commands/ directory created
+- [ ] src/providers/ directory created
+- [ ] src/utils/ directory created
+- [ ] src/test/ directory created
+- [ ] Each directory has index.ts barrel file
+
+## Structure
+
+```
+src/
+├── extension.ts
+├── commands/
+│   └── index.ts
+├── providers/
+│   └── index.ts
+├── utils/
+│   └── index.ts
+└── test/
+    └── runTest.ts
+```","phase:setup,type:infrastructure","Phase 1: Project Setup & Infrastructure"
+"1.9: Set up webpack/esbuild for extension bundling","## Description
+
+Configure bundler (webpack or esbuild) to create optimized extension bundle.
+
+## Acceptance Criteria
+
+- [ ] Bundler installed (recommend esbuild for speed)
+- [ ] Build configuration created
+- [ ] Minification enabled for production
+- [ ] Source maps configured
+- [ ] npm run build script works
+- [ ] Bundle size < 1MB initially
+
+## Recommendation
+
+Use esbuild for faster builds:
+- esbuild
+- esbuild-plugin-copy","phase:setup,type:infrastructure","Phase 1: Project Setup & Infrastructure"
+"1.10: Create .vscode/launch.json for debugging extension","## Description
+
+Set up VSCode launch configuration for debugging the extension during development.
+
+## Acceptance Criteria
+
+- [ ] .vscode/launch.json created
+- [ ] ""Run Extension"" launch configuration works
+- [ ] ""Extension Tests"" launch configuration works
+- [ ] Breakpoints work in extension code
+- [ ] Can debug in Extension Development Host
+
+## Configuration
+
+Should include:
+- Launch Extension Development Host
+- Attach to Extension Host
+- Run Extension Tests","phase:setup,type:infrastructure","Phase 1: Project Setup & Infrastructure"
+"2.1: RED - Write test for extension activation","## Description
+
+Write failing test for extension activation before implementing.
+
+## Acceptance Criteria
+
+- [ ] Test file created: src/test/extension.test.ts
+- [ ] Test for activate() function exists
+- [ ] Test for deactivate() function exists
+- [ ] Test fails (RED) because implementation doesn't exist
+- [ ] Test imports VSCode API mocks
+
+## TDD Cycle
+
+🔴 **RED** - This is the first step in TDD
+
+## References
+
+- [Extension Activation](https://code.visualstudio.com/api/references/activation-events)","phase:bootstrap,tdd:red,priority:high","Phase 2: Core Extension Bootstrap"
+"2.2: GREEN - Implement basic extension.activate() and extension.deactivate()","## Description
+
+Implement minimum code to make activation tests pass.
+
+## Acceptance Criteria
+
+- [ ] src/extension.ts implements activate() function
+- [ ] src/extension.ts implements deactivate() function
+- [ ] activate() returns void or Thenable<void>
+- [ ] Tests from previous issue now pass (GREEN)
+- [ ] Extension activates in Extension Development Host
+
+## TDD Cycle
+
+🟢 **GREEN** - Make the tests pass
+
+## Implementation
+
+```typescript
+export function activate(context: vscode.ExtensionContext) {
+  console.log('Synapse extension is now active');
+}
+
+export function deactivate() {}
+```","phase:bootstrap,tdd:green,priority:high","Phase 2: Core Extension Bootstrap"
+"2.3: REFACTOR - Clean up activation code, add proper error handling","## Description
+
+Refactor activation code while keeping tests green.
+
+## Acceptance Criteria
+
+- [ ] Error handling added to activate()
+- [ ] Logging improved with proper output channel
+- [ ] Code is clean and well-documented
+- [ ] All tests still pass (GREEN)
+- [ ] No new functionality added
+
+## TDD Cycle
+
+♻️ **REFACTOR** - Improve code quality
+
+## Improvements
+
+- Add try-catch blocks
+- Create output channel for logging
+- Add activation time logging
+- Improve error messages","phase:bootstrap,tdd:refactor","Phase 2: Core Extension Bootstrap"
+"2.4: RED - Write test for 'Hello Synapse' command registration","## Description
+
+Write failing test for command registration.
+
+## Acceptance Criteria
+
+- [ ] Test verifies command is registered
+- [ ] Test verifies command execution
+- [ ] Test mocks VSCode commands.registerCommand
+- [ ] Test fails (RED)
+
+## TDD Cycle
+
+🔴 **RED**
+
+## Command
+
+- ID: synapse.helloWorld
+- Title: Hello Synapse","phase:bootstrap,tdd:red","Phase 2: Core Extension Bootstrap"
+"2.5: GREEN - Implement basic command in package.json and extension.ts","## Description
+
+Implement command to make tests pass.
+
+## Acceptance Criteria
+
+- [ ] Command defined in package.json contributes.commands
+- [ ] Command registered in extension.ts activate()
+- [ ] Command shows information message
+- [ ] Tests pass (GREEN)
+
+## TDD Cycle
+
+🟢 **GREEN**
+
+## Implementation
+
+1. Add to package.json:
+```json
+""contributes"": {
+  ""commands"": [{
+    ""command"": ""synapse.helloWorld"",
+    ""title"": ""Hello Synapse""
+  }]
+}
+```
+
+2. Register in extension.ts","phase:bootstrap,tdd:green","Phase 2: Core Extension Bootstrap"
+"2.6: REFACTOR - Extract command registration to commands/ module","## Description
+
+Refactor command registration into separate module.
+
+## Acceptance Criteria
+
+- [ ] src/commands/helloWorld.ts created
+- [ ] Command implementation moved to new file
+- [ ] Clean imports in extension.ts
+- [ ] All tests still pass
+- [ ] Better code organization
+
+## TDD Cycle
+
+♻️ **REFACTOR**
+
+## Structure
+
+```typescript
+// src/commands/helloWorld.ts
+export function registerHelloWorld(context: ExtensionContext) {
+  // implementation
+}
+```","phase:bootstrap,tdd:refactor","Phase 2: Core Extension Bootstrap"
+"2.7: Verify extension loads in VSCode Extension Host","## Description
+
+Manual verification that extension loads and works in Extension Development Host.
+
+## Acceptance Criteria
+
+- [ ] Press F5 to launch Extension Development Host
+- [ ] Extension activates without errors
+- [ ] Command Palette shows 'Hello Synapse' command
+- [ ] Running command shows message
+- [ ] No console errors
+
+## Testing Steps
+
+1. Open project in VSCode
+2. Press F5
+3. In new window, open Command Palette (Cmd/Ctrl+Shift+P)
+4. Type 'Hello Synapse'
+5. Run command
+6. Verify information message appears","phase:bootstrap,priority:high","Phase 2: Core Extension Bootstrap"
+"3.1: RED - Write tests for detecting Synapse projects","## Description
+
+Write tests for detecting whether workspace contains a Synapse project.
+
+## Acceptance Criteria
+
+- [ ] Test for detecting @synapse dependencies in package.json
+- [ ] Test for missing package.json (not a Synapse project)
+- [ ] Test for package.json without @synapse deps
+- [ ] Tests fail (RED)
+
+## TDD Cycle
+
+🔴 **RED**
+
+## Detection Logic
+
+Should detect package.json with dependencies like:
+- @synapse/core
+- @synapse/neuron
+- @synapse/circuit","phase:detection,tdd:red","Phase 3: Synapse Project Detection"
+"3.2: GREEN - Implement SynapseProjectDetector utility class","## Description
+
+Implement class to detect Synapse projects in workspace.
+
+## Acceptance Criteria
+
+- [ ] src/utils/SynapseProjectDetector.ts created
+- [ ] Class has isSynapseProject() method
+- [ ] Reads package.json files
+- [ ] Checks for @synapse dependencies
+- [ ] All tests pass (GREEN)
+
+## TDD Cycle
+
+🟢 **GREEN**
+
+## API
+
+```typescript
+class SynapseProjectDetector {
+  async isSynapseProject(uri: vscode.Uri): Promise<boolean>;
+  async getSynapseVersion(): Promise<string | null>;
+}
+```","phase:detection,tdd:green","Phase 3: Synapse Project Detection"
+"3.3: REFACTOR - Add caching and workspace file watching","## Description
+
+Optimize detector with caching and file watching.
+
+## Acceptance Criteria
+
+- [ ] Cache detection results
+- [ ] Watch package.json for changes
+- [ ] Invalidate cache on file changes
+- [ ] All tests still pass
+- [ ] Performance improved
+
+## TDD Cycle
+
+♻️ **REFACTOR**
+
+## Improvements
+
+- Use vscode.workspace.createFileSystemWatcher
+- Cache results in WeakMap
+- Debounce file change events","phase:detection,tdd:refactor","Phase 3: Synapse Project Detection"
+"3.4: RED - Write tests for project structure validation","## Description
+
+Write tests for validating Synapse project structure.
+
+## Acceptance Criteria
+
+- [ ] Test for valid project structure
+- [ ] Test for missing required directories
+- [ ] Test for invalid structure
+- [ ] Tests fail (RED)
+
+## TDD Cycle
+
+🔴 **RED**
+
+## Valid Structure
+
+- src/ directory
+- neurons/ or circuits/ directories
+- tsconfig.json","phase:detection,tdd:red","Phase 3: Synapse Project Detection"
+"3.5: GREEN - Implement validation for valid Synapse project structure","## Description
+
+Implement structure validation to make tests pass.
+
+## Acceptance Criteria
+
+- [ ] validateStructure() method implemented
+- [ ] Checks for required directories
+- [ ] Returns validation results
+- [ ] All tests pass (GREEN)
+
+## TDD Cycle
+
+🟢 **GREEN**","phase:detection,tdd:green","Phase 3: Synapse Project Detection"
+"3.6: REFACTOR - Add detailed validation error messages","## Description
+
+Improve validation with detailed error messages.
+
+## Acceptance Criteria
+
+- [ ] Detailed error messages for each validation failure
+- [ ] Suggestions for fixing issues
+- [ ] All tests still pass
+- [ ] Better user experience
+
+## TDD Cycle
+
+♻️ **REFACTOR**","phase:detection,tdd:refactor","Phase 3: Synapse Project Detection"
+"4.1: RED - Write tests for snippet provider registration","## Description
+
+Write tests for snippet provider.
+
+## Acceptance Criteria
+
+- [ ] Test for snippet file existence
+- [ ] Test for valid JSON structure
+- [ ] Test for required snippets
+- [ ] Tests fail (RED)
+
+## TDD Cycle
+
+🔴 **RED**","phase:snippets,tdd:red","Phase 4: Code Snippets"
+"4.2: Create snippets/synapse.code-snippets with NeuralNode snippet","## Description
+
+Create snippet file with NeuralNode base class snippet.
+
+## Acceptance Criteria
+
+- [ ] snippets/ directory created
+- [ ] synapse.code-snippets file created
+- [ ] NeuralNode snippet defined
+- [ ] Snippet works in TypeScript files
+
+## Snippet
+
+- Prefix: neuralnode
+- Creates basic NeuralNode class structure
+- Includes imports from @synapse/core","phase:snippets,type:enhancement","Phase 4: Code Snippets"
+"4.3: Add snippet for CorticalNeuron (stateful microservice)","## Description
+
+Add snippet for creating CorticalNeuron (stateful).
+
+## Acceptance Criteria
+
+- [ ] corticalneuron snippet added
+- [ ] Includes state management
+- [ ] Includes process() method
+- [ ] Documented with JSDoc
+
+## Template
+
+```typescript
+class ${1:MyCortical}Neuron extends CorticalNeuron<${2:InputType}, ${3:OutputType}> {
+  // State for this neuron
+  private state: ${4:any};
+
+  async process(input: ${2}): Promise<${3}> {
+    // Implementation
+  }
+}
+```","phase:snippets,type:enhancement","Phase 4: Code Snippets"
+"4.4: Add snippet for ReflexNeuron (serverless function)","## Description
+
+Add snippet for creating ReflexNeuron (stateless).
+
+## Acceptance Criteria
+
+- [ ] reflexneuron snippet added
+- [ ] Stateless implementation
+- [ ] Fast activation pattern
+- [ ] Documented
+
+## Template
+
+Stateless, scales automatically","phase:snippets,type:enhancement","Phase 4: Code Snippets"
+"4.5: Add snippets for Glial cells (Astrocyte, Oligodendrocyte, Microglia, Ependymal)","## Description
+
+Add snippets for all glial cell types.
+
+## Acceptance Criteria
+
+- [ ] astrocyte snippet (caching)
+- [ ] oligodendrocyte snippet (connection pooling)
+- [ ] microglia snippet (health monitoring)
+- [ ] ependymal snippet (API gateway)
+- [ ] All snippets documented
+
+## Glial Cell Types
+
+- **Astrocyte**: LRU cache with TTL
+- **Oligodendrocyte**: Resource pooling
+- **Microglia**: Error tracking
+- **Ependymal**: Request routing","phase:snippets,type:enhancement","Phase 4: Code Snippets"
+"4.6: Add snippet for NeuralCircuit creation","## Description
+
+Add snippet for creating NeuralCircuit topology.
+
+## Acceptance Criteria
+
+- [ ] neuralcircuit snippet added
+- [ ] Includes neurons array
+- [ ] Includes connections
+- [ ] Includes activation method
+
+## Template
+
+Complete circuit with multiple neurons","phase:snippets,type:enhancement","Phase 4: Code Snippets"
+"4.7: Add snippet for Connection with type safety","## Description
+
+Add snippet for creating type-safe connections between neurons.
+
+## Acceptance Criteria
+
+- [ ] connection snippet added
+- [ ] Generic type parameters
+- [ ] Weight configuration
+- [ ] Hebbian learning option
+
+## Template
+
+```typescript
+const connection = new Connection<${1:SourceOutput}, ${2:TargetInput}>({
+  source: ${3:sourceNeuron},
+  target: ${4:targetNeuron},
+  weight: ${5:1.0}
+});
+```","phase:snippets,type:enhancement","Phase 4: Code Snippets"
+"4.8: GREEN - Verify all snippets work in TypeScript files","## Description
+
+Manually test all snippets in TypeScript files.
+
+## Acceptance Criteria
+
+- [ ] All snippets appear in IntelliSense
+- [ ] All snippets expand correctly
+- [ ] Tab stops work properly
+- [ ] No syntax errors in expanded code
+- [ ] Integration test added
+
+## TDD Cycle
+
+🟢 **GREEN**
+
+## Testing
+
+Create test TypeScript file and verify each snippet.","phase:snippets,tdd:green","Phase 4: Code Snippets"
+"5.1: RED - Write tests for CompletionItemProvider","## Description
+
+Write tests for IntelliSense completion provider.
+
+## Acceptance Criteria
+
+- [ ] Test for Neuron class completion
+- [ ] Test for Synapse API methods completion
+- [ ] Test for completion trigger characters
+- [ ] Tests fail (RED)
+
+## TDD Cycle
+
+🔴 **RED**","phase:intellisense,tdd:red","Phase 5: IntelliSense & Code Completion"
+"5.2: GREEN - Implement CompletionItemProvider for Synapse classes","## Description
+
+Implement completion provider for Synapse classes and APIs.
+
+## Acceptance Criteria
+
+- [ ] src/providers/CompletionProvider.ts created
+- [ ] Provides completions for NeuralNode, CorticalNeuron, ReflexNeuron
+- [ ] Provides completions for glial cells
+- [ ] Tests pass (GREEN)
+
+## TDD Cycle
+
+🟢 **GREEN**
+
+## Implementation
+
+Register with vscode.languages.registerCompletionItemProvider","phase:intellisense,tdd:green,priority:high","Phase 5: IntelliSense & Code Completion"
+"5.3: REFACTOR - Add documentation and examples to completion items","## Description
+
+Enhance completion items with documentation.
+
+## Acceptance Criteria
+
+- [ ] Documentation added to all completion items
+- [ ] Code examples in documentation
+- [ ] Markdown formatting in docs
+- [ ] Tests still pass
+
+## TDD Cycle
+
+♻️ **REFACTOR**","phase:intellisense,tdd:refactor","Phase 5: IntelliSense & Code Completion"
+"5.4: Add IntelliSense for Connection types and circuit patterns","## Description
+
+Add completions for Connection and Circuit patterns.
+
+## Acceptance Criteria
+
+- [ ] Connection type completions
+- [ ] Circuit pattern completions
+- [ ] Generic type inference
+- [ ] Documentation included","phase:intellisense,type:enhancement","Phase 5: IntelliSense & Code Completion"
+"5.5: Implement signature help for Neuron constructors and methods","## Description
+
+Add signature help provider for constructors and methods.
+
+## Acceptance Criteria
+
+- [ ] SignatureHelpProvider implemented
+- [ ] Shows parameter information
+- [ ] Shows overload information
+- [ ] Registered in extension
+
+## API
+
+vscode.languages.registerSignatureHelpProvider","phase:intellisense,type:enhancement","Phase 5: IntelliSense & Code Completion"
+"5.6: Add import suggestions for @synapse packages","## Description
+
+Suggest imports when using Synapse classes.
+
+## Acceptance Criteria
+
+- [ ] Auto-import suggestions work
+- [ ] Suggests correct @synapse packages
+- [ ] Updates import statements
+- [ ] Works with TypeScript language service","phase:intellisense,type:enhancement","Phase 5: IntelliSense & Code Completion"
+"6.1: RED - Write tests for HoverProvider","## Description
+
+Write tests for hover documentation provider.
+
+## Acceptance Criteria
+
+- [ ] Test for hovering over Neuron classes
+- [ ] Test for hovering over methods
+- [ ] Test for markdown formatting
+- [ ] Tests fail (RED)
+
+## TDD Cycle
+
+🔴 **RED**","phase:hover,tdd:red","Phase 6: Hover Provider"
+"6.2: GREEN - Implement HoverProvider with biological metaphor documentation","## Description
+
+Implement hover provider with rich documentation.
+
+## Acceptance Criteria
+
+- [ ] src/providers/HoverProvider.ts created
+- [ ] Provides hover info for Synapse classes
+- [ ] Includes biological metaphor explanations
+- [ ] Tests pass (GREEN)
+
+## TDD Cycle
+
+🟢 **GREEN**
+
+## Example
+
+When hovering over CorticalNeuron, show:
+- Technical description
+- Biological metaphor
+- Use cases
+- Code examples","phase:hover,tdd:green,priority:high","Phase 6: Hover Provider"
+"6.3: REFACTOR - Add code examples and diagrams to hover content","## Description
+
+Enhance hover content with examples and diagrams.
+
+## Acceptance Criteria
+
+- [ ] Code examples in hover content
+- [ ] ASCII diagrams where helpful
+- [ ] Links to documentation
+- [ ] Tests still pass
+
+## TDD Cycle
+
+♻️ **REFACTOR**","phase:hover,tdd:refactor","Phase 6: Hover Provider"
+"6.4: Add hover information for Circuit topology and connections","## Description
+
+Add hover info for circuits and connections.
+
+## Acceptance Criteria
+
+- [ ] Hover info for Circuit classes
+- [ ] Connection weight information
+- [ ] Topology diagrams
+- [ ] Performance characteristics","phase:hover,type:enhancement","Phase 6: Hover Provider"
+"7.1: RED - Write tests for DefinitionProvider","## Description
+
+Write tests for Go to Definition functionality.
+
+## Acceptance Criteria
+
+- [ ] Test for navigating to neuron definitions
+- [ ] Test for navigating to circuit definitions
+- [ ] Test for navigating to imports
+- [ ] Tests fail (RED)
+
+## TDD Cycle
+
+🔴 **RED**","phase:navigation,tdd:red","Phase 7: Definition & Reference Provider"
+"7.2: GREEN - Implement DefinitionProvider for Neurons and Circuits","## Description
+
+Implement Go to Definition for Synapse elements.
+
+## Acceptance Criteria
+
+- [ ] src/providers/DefinitionProvider.ts created
+- [ ] Navigate to neuron class definitions
+- [ ] Navigate to circuit definitions
+- [ ] Tests pass (GREEN)
+
+## TDD Cycle
+
+🟢 **GREEN**","phase:navigation,tdd:green","Phase 7: Definition & Reference Provider"
+"7.3: RED - Write tests for ReferenceProvider","## Description
+
+Write tests for Find All References functionality.
+
+## Acceptance Criteria
+
+- [ ] Test for finding neuron references
+- [ ] Test for finding circuit references
+- [ ] Test for finding connection references
+- [ ] Tests fail (RED)
+
+## TDD Cycle
+
+🔴 **RED**","phase:navigation,tdd:red","Phase 7: Definition & Reference Provider"
+"7.4: GREEN - Implement ReferenceProvider for finding all uses","## Description
+
+Implement Find All References for Synapse elements.
+
+## Acceptance Criteria
+
+- [ ] src/providers/ReferenceProvider.ts created
+- [ ] Finds all references to neurons
+- [ ] Finds all references to circuits
+- [ ] Tests pass (GREEN)
+
+## TDD Cycle
+
+🟢 **GREEN**","phase:navigation,tdd:green","Phase 7: Definition & Reference Provider"
+"7.5: REFACTOR - Optimize symbol lookup with index caching","## Description
+
+Optimize navigation providers with caching.
+
+## Acceptance Criteria
+
+- [ ] Symbol index cache implemented
+- [ ] Incremental updates on file changes
+- [ ] Faster navigation performance
+- [ ] Tests still pass
+
+## TDD Cycle
+
+♻️ **REFACTOR**","phase:navigation,tdd:refactor","Phase 7: Definition & Reference Provider"
+"8.1: RED - Write tests for DiagnosticProvider","## Description
+
+Write tests for diagnostics and linting.
+
+## Acceptance Criteria
+
+- [ ] Test for detecting invalid neuron configurations
+- [ ] Test for detecting type mismatches
+- [ ] Test for detecting circular dependencies
+- [ ] Tests fail (RED)
+
+## TDD Cycle
+
+🔴 **RED**","phase:diagnostics,tdd:red","Phase 8: Diagnostic Provider"
+"8.2: GREEN - Implement basic DiagnosticProvider for common errors","## Description
+
+Implement diagnostics for common Synapse errors.
+
+## Acceptance Criteria
+
+- [ ] src/providers/DiagnosticProvider.ts created
+- [ ] Detects invalid neuron configurations
+- [ ] Detects type mismatches
+- [ ] Tests pass (GREEN)
+
+## TDD Cycle
+
+🟢 **GREEN**","phase:diagnostics,tdd:green,priority:high","Phase 8: Diagnostic Provider"
+"8.3: REFACTOR - Add severity levels and quick fix suggestions","## Description
+
+Enhance diagnostics with severity levels and fixes.
+
+## Acceptance Criteria
+
+- [ ] Error, Warning, Info severity levels
+- [ ] Quick fix suggestions
+- [ ] Related information links
+- [ ] Tests still pass
+
+## TDD Cycle
+
+♻️ **REFACTOR**","phase:diagnostics,tdd:refactor","Phase 8: Diagnostic Provider"
+"8.4: Add validation for Circuit topology (cycles, disconnected neurons)","## Description
+
+Validate circuit structure and topology.
+
+## Acceptance Criteria
+
+- [ ] Detects circular dependencies
+- [ ] Detects disconnected neurons
+- [ ] Validates connection types
+- [ ] Provides helpful error messages","phase:diagnostics,type:enhancement","Phase 8: Diagnostic Provider"
+"8.5: Add diagnostics for incorrect Connection types","## Description
+
+Validate connection type safety.
+
+## Acceptance Criteria
+
+- [ ] Detects type mismatches in connections
+- [ ] Validates source and target types
+- [ ] Suggests correct types
+- [ ] Integration with TypeScript diagnostics","phase:diagnostics,type:enhancement","Phase 8: Diagnostic Provider"
+"8.6: Implement performance warnings for large circuits","## Description
+
+Warn about potential performance issues.
+
+## Acceptance Criteria
+
+- [ ] Warns about very large circuits
+- [ ] Warns about deeply nested connections
+- [ ] Suggests optimization strategies
+- [ ] Configurable thresholds","phase:diagnostics,type:enhancement","Phase 8: Diagnostic Provider"
+"8.7: Add validation for Glial cell configuration","## Description
+
+Validate glial cell settings and parameters.
+
+## Acceptance Criteria
+
+- [ ] Validates cache sizes for Astrocyte
+- [ ] Validates pool sizes for Oligodendrocyte
+- [ ] Validates monitoring intervals for Microglia
+- [ ] Validates routing rules for Ependymal","phase:diagnostics,type:enhancement","Phase 8: Diagnostic Provider"
+"9.1: RED - Write tests for scaffold neuron command","## Description
+
+Write tests for neuron scaffolding command.
+
+## Acceptance Criteria
+
+- [ ] Test for creating CorticalNeuron
+- [ ] Test for creating ReflexNeuron
+- [ ] Test for file creation
+- [ ] Tests fail (RED)
+
+## TDD Cycle
+
+🔴 **RED**","phase:scaffolding,tdd:red","Phase 9: Scaffolding Commands"
+"9.2: GREEN - Implement 'Synapse: Create Neuron' command","## Description
+
+Implement command to scaffold new neurons.
+
+## Acceptance Criteria
+
+- [ ] Command synapse.createNeuron registered
+- [ ] Quick pick for neuron type
+- [ ] Generates file with template
+- [ ] Tests pass (GREEN)
+
+## TDD Cycle
+
+🟢 **GREEN**
+
+## Neuron Types
+
+- CorticalNeuron (stateful)
+- ReflexNeuron (stateless)","phase:scaffolding,tdd:green,priority:high","Phase 9: Scaffolding Commands"
+"9.3: REFACTOR - Add custom templates and configuration options","## Description
+
+Enhance scaffolding with custom templates.
+
+## Acceptance Criteria
+
+- [ ] Support custom templates
+- [ ] Configuration for default neuron type
+- [ ] Template variables
+- [ ] Tests still pass
+
+## TDD Cycle
+
+♻️ **REFACTOR**","phase:scaffolding,tdd:refactor","Phase 9: Scaffolding Commands"
+"9.4: Implement 'Synapse: Create Circuit' command with topology wizard","## Description
+
+Create command to scaffold circuits with wizard.
+
+## Acceptance Criteria
+
+- [ ] Command synapse.createCircuit registered
+- [ ] Multi-step wizard for circuit creation
+- [ ] Choose neuron types and connections
+- [ ] Generates circuit file
+
+## Wizard Steps
+
+1. Circuit name
+2. Add neurons
+3. Define connections
+4. Generate code","phase:scaffolding,type:enhancement,priority:high","Phase 9: Scaffolding Commands"
+"9.5: Implement 'Synapse: Create Glial Cell' command","## Description
+
+Create command to scaffold glial cells.
+
+## Acceptance Criteria
+
+- [ ] Command synapse.createGlialCell registered
+- [ ] Quick pick for glial cell type
+- [ ] Generates configuration
+- [ ] Includes documentation
+
+## Glial Types
+
+- Astrocyte
+- Oligodendrocyte
+- Microglia
+- Ependymal","phase:scaffolding,type:enhancement","Phase 9: Scaffolding Commands"
+"9.6: Add 'Synapse: Add Connection' command for existing circuits","## Description
+
+Command to add connections to existing circuits.
+
+## Acceptance Criteria
+
+- [ ] Command synapse.addConnection registered
+- [ ] Pick source neuron
+- [ ] Pick target neuron
+- [ ] Set connection properties
+- [ ] Updates circuit file","phase:scaffolding,type:enhancement","Phase 9: Scaffolding Commands"
+"9.7: Create 'Synapse: Initialize Project' command for new projects","## Description
+
+Command to initialize new Synapse project.
+
+## Acceptance Criteria
+
+- [ ] Command synapse.initProject registered
+- [ ] Creates project structure
+- [ ] Installs dependencies
+- [ ] Creates sample files
+
+## Project Structure
+
+- src/neurons/
+- src/circuits/
+- src/glial/
+- tsconfig.json
+- package.json","phase:scaffolding,type:enhancement,priority:high","Phase 9: Scaffolding Commands"
+"9.8: Add file templates for test files alongside scaffolded code","## Description
+
+Generate test files with scaffolded code.
+
+## Acceptance Criteria
+
+- [ ] Option to generate test file
+- [ ] Test template matches code
+- [ ] Includes basic test cases
+- [ ] Jest/Mocha compatible","phase:scaffolding,type:enhancement","Phase 9: Scaffolding Commands"
+"9.9: Implement multi-neuron scaffolding for common patterns","## Description
+
+Scaffold common multi-neuron patterns.
+
+## Acceptance Criteria
+
+- [ ] Request-Response pattern
+- [ ] Pipeline pattern
+- [ ] Fan-out/Fan-in pattern
+- [ ] Event-driven pattern
+
+## Patterns
+
+Pre-built templates for common architectures","phase:scaffolding,type:enhancement","Phase 9: Scaffolding Commands"
+"10.1: RED - Write tests for circuit parser and graph builder","## Description
+
+Write tests for parsing circuits into graph data.
+
+## Acceptance Criteria
+
+- [ ] Test for parsing circuit definitions
+- [ ] Test for building graph structure
+- [ ] Test for detecting nodes and edges
+- [ ] Tests fail (RED)
+
+## TDD Cycle
+
+🔴 **RED**","phase:visualization,tdd:red","Phase 10: Circuit Visualization"
+"10.2: GREEN - Implement CircuitParser to extract topology","## Description
+
+Parse circuit code into graph data structure.
+
+## Acceptance Criteria
+
+- [ ] src/utils/CircuitParser.ts created
+- [ ] Extracts neurons from circuit
+- [ ] Extracts connections
+- [ ] Tests pass (GREEN)
+
+## TDD Cycle
+
+🟢 **GREEN**","phase:visualization,tdd:green","Phase 10: Circuit Visualization"
+"10.3: REFACTOR - Add caching and incremental parsing","## Description
+
+Optimize parser with caching.
+
+## Acceptance Criteria
+
+- [ ] Cache parsed results
+- [ ] Incremental updates
+- [ ] Performance improvements
+- [ ] Tests still pass
+
+## TDD Cycle
+
+♻️ **REFACTOR**","phase:visualization,tdd:refactor","Phase 10: Circuit Visualization"
+"10.4: Create webview panel for circuit visualization","## Description
+
+Create VSCode webview for displaying circuits.
+
+## Acceptance Criteria
+
+- [ ] Webview panel created
+- [ ] Command to open visualization
+- [ ] HTML/CSS for graph display
+- [ ] Communication with extension","phase:visualization,type:enhancement,priority:high","Phase 10: Circuit Visualization"
+"10.5: Integrate vis-network or D3.js for interactive graph rendering","## Description
+
+Use graph library for rendering circuits.
+
+## Acceptance Criteria
+
+- [ ] Library integrated (vis-network or D3.js)
+- [ ] Renders neurons as nodes
+- [ ] Renders connections as edges
+- [ ] Interactive (pan, zoom, click)
+
+## Recommendation
+
+vis-network is easier for network graphs","phase:visualization,type:enhancement,priority:high","Phase 10: Circuit Visualization"
+"10.6: Add color coding for neuron types (Cortical, Reflex, Glial)","## Description
+
+Visual distinction for different neuron types.
+
+## Acceptance Criteria
+
+- [ ] Different colors for neuron types
+- [ ] Legend explaining colors
+- [ ] Icons for glial cells
+- [ ] Customizable color scheme","phase:visualization,type:enhancement","Phase 10: Circuit Visualization"
+"10.7: Implement click-to-navigate from visualization to code","## Description
+
+Navigate to code from visualization.
+
+## Acceptance Criteria
+
+- [ ] Click neuron to jump to definition
+- [ ] Click connection to see code
+- [ ] Hover shows tooltip
+- [ ] Bidirectional navigation","phase:visualization,type:enhancement","Phase 10: Circuit Visualization"
+"10.8: Add export visualization as PNG/SVG feature","## Description
+
+Export circuit visualization as image.
+
+## Acceptance Criteria
+
+- [ ] Export to PNG
+- [ ] Export to SVG
+- [ ] High resolution output
+- [ ] Save to workspace","phase:visualization,type:enhancement","Phase 10: Circuit Visualization"
+"11.1: RED - Write tests for debug configuration provider","## Description
+
+Write tests for debug configuration.
+
+## Acceptance Criteria
+
+- [ ] Test for resolving debug configuration
+- [ ] Test for providing initial configuration
+- [ ] Tests fail (RED)
+
+## TDD Cycle
+
+🔴 **RED**","phase:debugging,tdd:red","Phase 11: Debugging Support"
+"11.2: GREEN - Implement DebugConfigurationProvider","## Description
+
+Provide debug configurations for Synapse projects.
+
+## Acceptance Criteria
+
+- [ ] src/providers/DebugConfigurationProvider.ts created
+- [ ] Provides debug configurations
+- [ ] Registered with debugger
+- [ ] Tests pass (GREEN)
+
+## TDD Cycle
+
+🟢 **GREEN**","phase:debugging,tdd:green","Phase 11: Debugging Support"
+"11.3: Create launch.json template for debugging Synapse apps","## Description
+
+Template debug configuration for Synapse.
+
+## Acceptance Criteria
+
+- [ ] launch.json template created
+- [ ] Node.js debugging support
+- [ ] Attach to running process support
+- [ ] Environment variables configured","phase:debugging,type:enhancement","Phase 11: Debugging Support"
+"11.4: Add debugger visualizers for Neuron state","## Description
+
+Custom debug visualizers for neurons.
+
+## Acceptance Criteria
+
+- [ ] Custom visualizer for neuron state
+- [ ] Shows current input/output
+- [ ] Shows connection states
+- [ ] Formatted display in debug console","phase:debugging,type:enhancement","Phase 11: Debugging Support"
+"11.5: Implement signal flow tracing during debug sessions","## Description
+
+Trace signals through circuit during debugging.
+
+## Acceptance Criteria
+
+- [ ] Trace signal flow through neurons
+- [ ] Visualize path in debug console
+- [ ] Show transformation at each step
+- [ ] Integration with circuit visualization","phase:debugging,type:enhancement","Phase 11: Debugging Support"
+"11.6: Add breakpoint actions for circuit debugging","## Description
+
+Special breakpoint actions for circuits.
+
+## Acceptance Criteria
+
+- [ ] Breakpoint on neuron activation
+- [ ] Breakpoint on signal transmission
+- [ ] Conditional breakpoints on signal value
+- [ ] Log point support","phase:debugging,type:enhancement","Phase 11: Debugging Support"
+"12.1: Create TextMate grammar for Synapse-specific syntax","## Description
+
+Create TextMate grammar for syntax highlighting.
+
+## Acceptance Criteria
+
+- [ ] syntaxes/synapse.tmLanguage.json created
+- [ ] Highlights Synapse keywords
+- [ ] Highlights class names
+- [ ] Registered in package.json
+
+## Keywords
+
+- NeuralNode, CorticalNeuron, ReflexNeuron
+- Astrocyte, Oligodendrocyte, Microglia, Ependymal
+- Circuit, Connection","phase:syntax,type:enhancement","Phase 12: Syntax Highlighting"
+"12.2: Implement semantic token provider for Synapse symbols","## Description
+
+Semantic token provider for better highlighting.
+
+## Acceptance Criteria
+
+- [ ] DocumentSemanticTokensProvider implemented
+- [ ] Highlights neurons semantically
+- [ ] Highlights circuits and connections
+- [ ] Better than TextMate grammar alone","phase:syntax,type:enhancement","Phase 12: Syntax Highlighting"
+"12.3: Add syntax highlighting for circuit topology DSL","## Description
+
+Highlight circuit definition syntax.
+
+## Acceptance Criteria
+
+- [ ] Highlights circuit declarations
+- [ ] Highlights connection arrows
+- [ ] Highlights topology syntax
+- [ ] Support for inline circuit definitions","phase:syntax,type:enhancement","Phase 12: Syntax Highlighting"
+"12.4: Create theme support for Synapse-specific tokens","## Description
+
+Theme support for Synapse tokens.
+
+## Acceptance Criteria
+
+- [ ] Token colors defined
+- [ ] Works with popular themes
+- [ ] Contributes token colors
+- [ ] Documentation for theme authors","phase:syntax,type:enhancement","Phase 12: Syntax Highlighting"
+"13.1: RED - Write tests for TaskProvider","## Description
+
+Write tests for task provider.
+
+## Acceptance Criteria
+
+- [ ] Test for providing build tasks
+- [ ] Test for providing run tasks
+- [ ] Tests fail (RED)
+
+## TDD Cycle
+
+🔴 **RED**","phase:tasks,tdd:red","Phase 13: Task Provider"
+"13.2: GREEN - Implement TaskProvider for build, run, test tasks","## Description
+
+Provide tasks for common Synapse operations.
+
+## Acceptance Criteria
+
+- [ ] src/providers/TaskProvider.ts created
+- [ ] Build task provided
+- [ ] Run task provided
+- [ ] Test task provided
+- [ ] Tests pass (GREEN)
+
+## TDD Cycle
+
+🟢 **GREEN**","phase:tasks,tdd:green","Phase 13: Task Provider"
+"13.3: Add 'Synapse: Build Circuit' task","## Description
+
+Task to build specific circuit.
+
+## Acceptance Criteria
+
+- [ ] Build individual circuit
+- [ ] TypeScript compilation
+- [ ] Error reporting
+- [ ] Problem matcher","phase:tasks,type:enhancement","Phase 13: Task Provider"
+"13.4: Add 'Synapse: Run Circuit' task with input handling","## Description
+
+Task to run circuit with test input.
+
+## Acceptance Criteria
+
+- [ ] Run circuit
+- [ ] Input parameter prompts
+- [ ] Output display
+- [ ] Error handling","phase:tasks,type:enhancement","Phase 13: Task Provider"
+"13.5: Add 'Synapse: Test All Neurons' task","## Description
+
+Task to run all neuron tests.
+
+## Acceptance Criteria
+
+- [ ] Run all tests
+- [ ] Test result reporting
+- [ ] Coverage reporting
+- [ ] Integration with Test Explorer","phase:tasks,type:enhancement","Phase 13: Task Provider"
+"14.1: RED - Write tests for CodeActionProvider","## Description
+
+Write tests for code actions and quick fixes.
+
+## Acceptance Criteria
+
+- [ ] Test for quick fix suggestions
+- [ ] Test for refactoring actions
+- [ ] Tests fail (RED)
+
+## TDD Cycle
+
+🔴 **RED**","phase:refactoring,tdd:red","Phase 14: Code Actions & Refactoring"
+"14.2: GREEN - Implement CodeActionProvider for common fixes","## Description
+
+Implement code actions for common issues.
+
+## Acceptance Criteria
+
+- [ ] src/providers/CodeActionProvider.ts created
+- [ ] Quick fixes for diagnostics
+- [ ] Refactoring actions
+- [ ] Tests pass (GREEN)
+
+## TDD Cycle
+
+🟢 **GREEN**","phase:refactoring,tdd:green","Phase 14: Code Actions & Refactoring"
+"14.3: Add 'Convert to CorticalNeuron' refactoring","## Description
+
+Refactor ReflexNeuron to CorticalNeuron.
+
+## Acceptance Criteria
+
+- [ ] Code action available
+- [ ] Converts class
+- [ ] Adds state management
+- [ ] Updates types","phase:refactoring,type:enhancement","Phase 14: Code Actions & Refactoring"
+"14.4: Add 'Extract to Circuit' refactoring","## Description
+
+Extract neurons into new circuit.
+
+## Acceptance Criteria
+
+- [ ] Select neurons
+- [ ] Extract to new circuit file
+- [ ] Maintain connections
+- [ ] Update imports","phase:refactoring,type:enhancement","Phase 14: Code Actions & Refactoring"
+"14.5: Add 'Optimize Connection Weights' code action","## Description
+
+Suggest connection weight optimizations.
+
+## Acceptance Criteria
+
+- [ ] Analyze connection patterns
+- [ ] Suggest weight values
+- [ ] Apply optimization
+- [ ] Preserve behavior","phase:refactoring,type:enhancement","Phase 14: Code Actions & Refactoring"
+"14.6: Add 'Add Glial Cell' quick fix for common patterns","## Description
+
+Quick fix to add appropriate glial cell.
+
+## Acceptance Criteria
+
+- [ ] Detect repeated operations
+- [ ] Suggest Astrocyte for caching
+- [ ] Suggest Oligodendrocyte for pooling
+- [ ] Insert code with configuration","phase:refactoring,type:enhancement","Phase 14: Code Actions & Refactoring"
+"15.1: RED - Write tests for TreeDataProvider","## Description
+
+Write tests for tree view provider.
+
+## Acceptance Criteria
+
+- [ ] Test for tree structure
+- [ ] Test for tree item creation
+- [ ] Tests fail (RED)
+
+## TDD Cycle
+
+🔴 **RED**","phase:treeview,tdd:red","Phase 15: TreeView"
+"15.2: GREEN - Implement TreeDataProvider for project structure","## Description
+
+Implement tree view for Synapse project structure.
+
+## Acceptance Criteria
+
+- [ ] src/providers/TreeDataProvider.ts created
+- [ ] Shows neurons folder
+- [ ] Shows circuits folder
+- [ ] Shows glial cells folder
+- [ ] Tests pass (GREEN)
+
+## TDD Cycle
+
+🟢 **GREEN**","phase:treeview,tdd:green,priority:high","Phase 15: TreeView"
+"15.3: Add custom icons for Neurons, Circuits, and Glial cells","## Description
+
+Custom icons in tree view.
+
+## Acceptance Criteria
+
+- [ ] Icon for CorticalNeuron
+- [ ] Icon for ReflexNeuron
+- [ ] Icon for Circuit
+- [ ] Icon for each glial type
+- [ ] SVG icons in resources/","phase:treeview,type:enhancement","Phase 15: TreeView"
+"15.4: Add tree view actions (create, delete, rename)","## Description
+
+Actions in tree view.
+
+## Acceptance Criteria
+
+- [ ] Create new neuron action
+- [ ] Delete action
+- [ ] Rename action
+- [ ] Refresh action","phase:treeview,type:enhancement","Phase 15: TreeView"
+"15.5: Implement circuit dependency tree view","## Description
+
+Show circuit dependencies in tree.
+
+## Acceptance Criteria
+
+- [ ] Show circuit dependencies
+- [ ] Show neuron usage
+- [ ] Expand/collapse dependencies
+- [ ] Click to navigate","phase:treeview,type:enhancement","Phase 15: TreeView"
+"16.1: Set up test coverage reporting with Istanbul/nyc","## Description
+
+Configure code coverage reporting.
+
+## Acceptance Criteria
+
+- [ ] Istanbul/nyc installed
+- [ ] Coverage configured
+- [ ] HTML coverage report
+- [ ] Coverage threshold: 80%","phase:testing,type:infrastructure,priority:high","Phase 16: Testing Strategy & Coverage"
+"16.2: Write unit tests for all providers","## Description
+
+Comprehensive unit tests for providers.
+
+## Acceptance Criteria
+
+- [ ] CompletionProvider tests
+- [ ] HoverProvider tests
+- [ ] DiagnosticProvider tests
+- [ ] DefinitionProvider tests
+- [ ] ReferenceProvider tests
+- [ ] >80% coverage","phase:testing,priority:high","Phase 16: Testing Strategy & Coverage"
+"16.3: Write integration tests for command execution","## Description
+
+Integration tests for all commands.
+
+## Acceptance Criteria
+
+- [ ] Test all commands
+- [ ] Test in Extension Host
+- [ ] Test file operations
+- [ ] Test UI interactions","phase:testing,priority:high","Phase 16: Testing Strategy & Coverage"
+"16.4: Add E2E tests for extension workflows","## Description
+
+End-to-end tests for complete workflows.
+
+## Acceptance Criteria
+
+- [ ] Create neuron workflow
+- [ ] Create circuit workflow
+- [ ] Debugging workflow
+- [ ] Visualization workflow","phase:testing,type:enhancement","Phase 16: Testing Strategy & Coverage"
+"16.5: Set up continuous testing with Jest watch mode","## Description
+
+Watch mode for development.
+
+## Acceptance Criteria
+
+- [ ] Jest watch mode configured
+- [ ] Auto-run on file changes
+- [ ] Fast feedback loop
+- [ ] npm run test:watch script","phase:testing,type:infrastructure","Phase 16: Testing Strategy & Coverage"
+"16.6: Create test fixtures for Synapse projects","## Description
+
+Test fixtures for integration tests.
+
+## Acceptance Criteria
+
+- [ ] Sample Synapse project
+- [ ] Various neuron types
+- [ ] Sample circuits
+- [ ] Edge cases covered","phase:testing,type:infrastructure","Phase 16: Testing Strategy & Coverage"
+"17.1: Write README.md with features, installation, and usage","## Description
+
+Comprehensive README for the extension.
+
+## Acceptance Criteria
+
+- [ ] Feature list
+- [ ] Installation instructions
+- [ ] Usage examples
+- [ ] Screenshots
+- [ ] Contributing guidelines","phase:docs,priority:high","Phase 17: Documentation"
+"17.2: Create CONTRIBUTING.md with development setup","## Description
+
+Guide for contributors.
+
+## Acceptance Criteria
+
+- [ ] Development setup
+- [ ] Build instructions
+- [ ] Testing guidelines
+- [ ] PR process
+- [ ] Code style guide","phase:docs","Phase 17: Documentation"
+"17.3: Write user documentation for all features","## Description
+
+Complete user documentation.
+
+## Acceptance Criteria
+
+- [ ] docs/ directory created
+- [ ] Feature documentation
+- [ ] Examples
+- [ ] Troubleshooting
+- [ ] FAQ","phase:docs,priority:high","Phase 17: Documentation"
+"17.4: Create video walkthrough or GIFs demonstrating features","## Description
+
+Visual documentation of features.
+
+## Acceptance Criteria
+
+- [ ] Screen recordings
+- [ ] GIF demonstrations
+- [ ] Feature highlights
+- [ ] Added to README","phase:docs","Phase 17: Documentation"
+"17.5: Add inline documentation (JSDoc) to all public APIs","## Description
+
+JSDoc for all public APIs.
+
+## Acceptance Criteria
+
+- [ ] JSDoc on all exports
+- [ ] Parameter descriptions
+- [ ] Return value docs
+- [ ] Example usage
+- [ ] @since tags","phase:docs","Phase 17: Documentation"
+"17.6: Create CHANGELOG.md following Keep a Changelog format","## Description
+
+Changelog for version tracking.
+
+## Acceptance Criteria
+
+- [ ] CHANGELOG.md created
+- [ ] Keep a Changelog format
+- [ ] Version sections
+- [ ] Release dates
+- [ ] Breaking changes noted","phase:docs","Phase 17: Documentation"
+"18.1: Set up GitHub Actions workflow for CI","## Description
+
+GitHub Actions for continuous integration.
+
+## Acceptance Criteria
+
+- [ ] .github/workflows/ci.yml created
+- [ ] Run on push and PR
+- [ ] Multiple Node versions
+- [ ] Multiple OS (Linux, macOS, Windows)","phase:ci-cd,type:infrastructure,priority:high","Phase 18: CI/CD Pipeline"
+"18.2: Add automated testing in CI pipeline","## Description
+
+Run tests in CI.
+
+## Acceptance Criteria
+
+- [ ] Unit tests run
+- [ ] Integration tests run
+- [ ] Coverage reported
+- [ ] Fail on low coverage","phase:ci-cd,type:infrastructure,priority:high","Phase 18: CI/CD Pipeline"
+"18.3: Add linting and formatting checks in CI","## Description
+
+Code quality checks in CI.
+
+## Acceptance Criteria
+
+- [ ] ESLint runs
+- [ ] Prettier check runs
+- [ ] TypeScript compilation check
+- [ ] Fail on violations","phase:ci-cd,type:infrastructure","Phase 18: CI/CD Pipeline"
+"18.4: Set up automated VSIX packaging","## Description
+
+Package extension in CI.
+
+## Acceptance Criteria
+
+- [ ] vsce package runs
+- [ ] VSIX artifact uploaded
+- [ ] Version from package.json
+- [ ] Available for download","phase:ci-cd,type:infrastructure","Phase 18: CI/CD Pipeline"
+"18.5: Add automated release workflow","## Description
+
+Automated releases with GitHub Actions.
+
+## Acceptance Criteria
+
+- [ ] Release workflow created
+- [ ] Triggered on tag push
+- [ ] Creates GitHub release
+- [ ] Attaches VSIX
+- [ ] Updates changelog","phase:ci-cd,type:infrastructure","Phase 18: CI/CD Pipeline"
+"18.6: Set up semantic versioning and release notes","## Description
+
+Semantic versioning and release notes.
+
+## Acceptance Criteria
+
+- [ ] Semantic versioning followed
+- [ ] Release notes generated
+- [ ] Breaking changes documented
+- [ ] Migration guides","phase:ci-cd","Phase 18: CI/CD Pipeline"
+"18.7: Add badge status to README (CI, coverage, version)","## Description
+
+Status badges in README.
+
+## Acceptance Criteria
+
+- [ ] CI status badge
+- [ ] Coverage badge
+- [ ] Version badge
+- [ ] Download badge","phase:ci-cd","Phase 18: CI/CD Pipeline"
+"18.8: Set up dependabot for dependency updates","## Description
+
+Automated dependency updates.
+
+## Acceptance Criteria
+
+- [ ] .github/dependabot.yml created
+- [ ] npm dependencies monitored
+- [ ] GitHub Actions monitored
+- [ ] Weekly check schedule","phase:ci-cd,type:infrastructure","Phase 18: CI/CD Pipeline"
+"19.1: Analyze bundle size and identify optimization opportunities","## Description
+
+Bundle analysis for optimization.
+
+## Acceptance Criteria
+
+- [ ] Bundle size analysis
+- [ ] Large dependencies identified
+- [ ] Tree-shaking verified
+- [ ] Optimization plan created","phase:optimization,priority:high","Phase 19: Package & Bundle Optimization"
+"19.2: Implement tree-shaking and remove unused dependencies","## Description
+
+Remove unused code and dependencies.
+
+## Acceptance Criteria
+
+- [ ] Tree-shaking working
+- [ ] Unused deps removed
+- [ ] Smaller bundle size
+- [ ] All features still work","phase:optimization","Phase 19: Package & Bundle Optimization"
+"19.3: Optimize extension activation time","## Description
+
+Faster extension activation.
+
+## Acceptance Criteria
+
+- [ ] Lazy loading implemented
+- [ ] Activation time measured
+- [ ] <500ms activation time
+- [ ] No functionality lost","phase:optimization,priority:high","Phase 19: Package & Bundle Optimization"
+"19.4: Add lazy loading for heavy dependencies","## Description
+
+Lazy load dependencies on demand.
+
+## Acceptance Criteria
+
+- [ ] Heavy deps loaded on demand
+- [ ] Graph library lazy loaded
+- [ ] Parser lazy loaded
+- [ ] Faster initial load","phase:optimization","Phase 19: Package & Bundle Optimization"
+"19.5: Verify extension works offline with local assets","## Description
+
+Ensure offline functionality.
+
+## Acceptance Criteria
+
+- [ ] All assets bundled
+- [ ] No CDN dependencies
+- [ ] Works without internet
+- [ ] Documentation included","phase:optimization","Phase 19: Package & Bundle Optimization"
+"20.1: Create publisher account on Visual Studio Marketplace","## Description
+
+Set up marketplace publisher account.
+
+## Acceptance Criteria
+
+- [ ] Publisher account created
+- [ ] Publisher name chosen
+- [ ] Publisher verified
+- [ ] Personal access token created
+
+## URL
+
+https://marketplace.visualstudio.com/manage","phase:marketplace,priority:high","Phase 20: Extension Marketplace Preparation"
+"20.2: Design extension icon and banner","## Description
+
+Create visual identity for extension.
+
+## Acceptance Criteria
+
+- [ ] Extension icon designed (128x128)
+- [ ] Banner image created
+- [ ] Logo represents Synapse concept
+- [ ] High quality PNG/SVG","phase:marketplace,priority:high","Phase 20: Extension Marketplace Preparation"
+"20.3: Write marketplace description with screenshots","## Description
+
+Marketplace listing description.
+
+## Acceptance Criteria
+
+- [ ] Compelling description
+- [ ] Feature highlights
+- [ ] Screenshots added
+- [ ] GIFs of features
+- [ ] Keywords for search","phase:marketplace,priority:high","Phase 20: Extension Marketplace Preparation"
+"20.4: Set up extension categories and tags","## Description
+
+Proper categorization for marketplace.
+
+## Acceptance Criteria
+
+- [ ] Categories selected
+- [ ] Tags added
+- [ ] Keywords optimized
+- [ ] License specified
+
+## Categories
+
+- Programming Languages
+- Snippets
+- Debuggers
+- Visualization","phase:marketplace","Phase 20: Extension Marketplace Preparation"
+"20.5: Create pricing and licensing strategy","## Description
+
+Determine pricing and license.
+
+## Acceptance Criteria
+
+- [ ] License chosen (recommend MIT)
+- [ ] Pricing strategy (free)
+- [ ] LICENSE file added
+- [ ] Copyright headers","phase:marketplace","Phase 20: Extension Marketplace Preparation"
+"21.1: Test extension on Windows, macOS, and Linux","## Description
+
+Cross-platform testing.
+
+## Acceptance Criteria
+
+- [ ] Tested on Windows 10/11
+- [ ] Tested on macOS (Intel and Apple Silicon)
+- [ ] Tested on Linux (Ubuntu)
+- [ ] All features work on all platforms","phase:pre-release,priority:high","Phase 21: Pre-Release Testing"
+"21.2: Test with different VSCode versions (minimum supported to latest)","## Description
+
+Version compatibility testing.
+
+## Acceptance Criteria
+
+- [ ] Test on minimum VSCode version
+- [ ] Test on latest stable
+- [ ] Test on Insiders
+- [ ] Document version requirements","phase:pre-release,priority:high","Phase 21: Pre-Release Testing"
+"21.3: Perform user acceptance testing with beta users","## Description
+
+Beta testing with real users.
+
+## Acceptance Criteria
+
+- [ ] 5-10 beta users recruited
+- [ ] Feedback survey created
+- [ ] Issues documented
+- [ ] Critical bugs fixed","phase:pre-release,priority:high","Phase 21: Pre-Release Testing"
+"21.4: Run performance benchmarks and optimize bottlenecks","## Description
+
+Performance testing and optimization.
+
+## Acceptance Criteria
+
+- [ ] Benchmark suite created
+- [ ] Activation time < 500ms
+- [ ] Large circuit handling tested
+- [ ] Memory usage profiled","phase:pre-release","Phase 21: Pre-Release Testing"
+"21.5: Verify all documentation is accurate and complete","## Description
+
+Documentation review.
+
+## Acceptance Criteria
+
+- [ ] README reviewed
+- [ ] All features documented
+- [ ] Examples tested
+- [ ] Links verified","phase:pre-release","Phase 21: Pre-Release Testing"
+"21.6: Create pre-release checklist and sign-off process","## Description
+
+Release readiness checklist.
+
+## Acceptance Criteria
+
+- [ ] Checklist created
+- [ ] All tests pass
+- [ ] Documentation complete
+- [ ] No critical bugs
+- [ ] Sign-off obtained","phase:pre-release,priority:high","Phase 21: Pre-Release Testing"
+"22.1: Bump version to 0.1.0 and update CHANGELOG","## Description
+
+Prepare version 0.1.0.
+
+## Acceptance Criteria
+
+- [ ] Version bumped to 0.1.0
+- [ ] CHANGELOG updated
+- [ ] Git tag created
+- [ ] Commit message follows convention","phase:release,priority:high","Phase 22: Alpha Release (v0.1.0)"
+"22.2: Publish to Visual Studio Marketplace","## Description
+
+Publish extension to marketplace.
+
+## Acceptance Criteria
+
+- [ ] vsce publish runs successfully
+- [ ] Extension visible in marketplace
+- [ ] Install button works
+- [ ] Listing looks correct
+
+## Command
+
+```bash
+vsce publish
+```","phase:release,priority:high","Phase 22: Alpha Release (v0.1.0)"
+"22.3: Create GitHub release with release notes","## Description
+
+GitHub release for v0.1.0.
+
+## Acceptance Criteria
+
+- [ ] Release created on GitHub
+- [ ] Release notes from CHANGELOG
+- [ ] VSIX attached
+- [ ] Tag v0.1.0 created","phase:release,priority:high","Phase 22: Alpha Release (v0.1.0)"
+"22.4: Announce release on social media and Synapse community","## Description
+
+Announce the release.
+
+## Acceptance Criteria
+
+- [ ] Post on Synapse GitHub discussions
+- [ ] Tweet about release
+- [ ] Post in relevant communities
+- [ ] Include screenshots and features","phase:release","Phase 22: Alpha Release (v0.1.0)"
+"22.5: Monitor initial user feedback and bug reports","## Description
+
+Monitor post-release feedback.
+
+## Acceptance Criteria
+
+- [ ] GitHub issues monitored
+- [ ] Marketplace reviews monitored
+- [ ] Respond to feedback within 24h
+- [ ] Document common issues","phase:release,priority:high","Phase 22: Alpha Release (v0.1.0)"
+"23.1: Set up telemetry for usage analytics (opt-in)","## Description
+
+Anonymous usage analytics.
+
+## Acceptance Criteria
+
+- [ ] Telemetry implemented
+- [ ] Opt-in by default
+- [ ] Privacy policy created
+- [ ] No PII collected
+- [ ] Analytics dashboard","phase:monitoring","Phase 23: Post-Release Monitoring"
+"23.2: Monitor extension installation and usage metrics","## Description
+
+Track adoption metrics.
+
+## Acceptance Criteria
+
+- [ ] Install count tracked
+- [ ] Active users tracked
+- [ ] Feature usage tracked
+- [ ] Popular features identified","phase:monitoring","Phase 23: Post-Release Monitoring"
+"23.3: Collect and prioritize user feedback and feature requests","## Description
+
+Feedback collection and prioritization.
+
+## Acceptance Criteria
+
+- [ ] Feedback channels established
+- [ ] Feature request template
+- [ ] Prioritization framework
+- [ ] Roadmap updated","phase:monitoring,priority:high","Phase 23: Post-Release Monitoring"
+"23.4: Address critical bugs within 48 hours","## Description
+
+Rapid response to critical bugs.
+
+## Acceptance Criteria
+
+- [ ] Critical bug process defined
+- [ ] Response time < 48h
+- [ ] Patch release process
+- [ ] Communication plan","phase:monitoring,priority:high","Phase 23: Post-Release Monitoring"
+"23.5: Plan roadmap for v0.2.0 based on feedback","## Description
+
+Plan next version.
+
+## Acceptance Criteria
+
+- [ ] Feedback analyzed
+- [ ] Features prioritized
+- [ ] Roadmap created
+- [ ] Timeline estimated
+- [ ] Milestones created","phase:monitoring","Phase 23: Post-Release Monitoring"
+"24.1: Implement AI-powered circuit optimization suggestions","## Description
+
+ML-based circuit optimization.
+
+## Acceptance Criteria
+
+- [ ] ML model for optimization
+- [ ] Analyze circuit patterns
+- [ ] Suggest improvements
+- [ ] Explain suggestions","phase:advanced,type:enhancement","Phase 24: Advanced Features (Future)"
+"24.2: Add collaborative circuit editing (Live Share integration)","## Description
+
+Collaborative editing support.
+
+## Acceptance Criteria
+
+- [ ] Live Share extension integration
+- [ ] Shared circuit editing
+- [ ] Real-time visualization sync
+- [ ] Conflict resolution","phase:advanced,type:enhancement","Phase 24: Advanced Features (Future)"
+"24.3: Create Synapse circuit marketplace for sharing templates","## Description
+
+Community circuit marketplace.
+
+## Acceptance Criteria
+
+- [ ] Browse circuit templates
+- [ ] Download circuits
+- [ ] Share own circuits
+- [ ] Rating system","phase:advanced,type:enhancement","Phase 24: Advanced Features (Future)"
+"24.4: Add performance profiling and bottleneck detection","## Description
+
+Circuit performance profiler.
+
+## Acceptance Criteria
+
+- [ ] Profile circuit execution
+- [ ] Identify bottlenecks
+- [ ] Suggest optimizations
+- [ ] Visual performance report","phase:advanced,type:enhancement","Phase 24: Advanced Features (Future)"
+"24.5: Implement circuit testing framework with signal mocking","## Description
+
+Testing framework for circuits.
+
+## Acceptance Criteria
+
+- [ ] Mock signal inputs
+- [ ] Assert outputs
+- [ ] Test coverage for circuits
+- [ ] Integration with Jest","phase:advanced,type:enhancement","Phase 24: Advanced Features (Future)"
+"24.6: Add support for distributed circuit debugging","## Description
+
+Debug distributed circuits.
+
+## Acceptance Criteria
+
+- [ ] Debug across multiple processes
+- [ ] Trace distributed signals
+- [ ] Visualize distributed topology
+- [ ] Remote debugging support","phase:advanced,type:enhancement","Phase 24: Advanced Features (Future)"

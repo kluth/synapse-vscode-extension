@@ -56,23 +56,25 @@ All features are developed using strict TDD methodology:
 
 ### For Contributors
 
-#### 1. Create GitHub Issues
+#### 1. Import GitHub Issues
 
-We have automation scripts to create all 148 issues and 24 milestones:
+We have a comprehensive CSV file with all 148 issues ready for bulk import:
 
+**Quick Start:**
 ```bash
-# Set your GitHub token (get from: https://github.com/settings/tokens/new)
-export GH_PAT="your_github_token_here"
-
-# Run the automated setup
-./create-issues.sh
+# See CSV_IMPORT_GUIDE.md for detailed instructions
+# The CSV file is ready to import via GitHub CLI or GitHub's web UI
 ```
 
-**Alternative methods:**
-- Use GitHub CLI: `./create-issues-with-gh.sh`
-- Manual creation: See `ISSUES_TEMPLATE.md`
+**Import Methods:**
+- **GitHub CLI** - Bulk create using `gh` command (recommended)
+- **Manual Import** - Upload CSV via GitHub's issue import feature
+- **Reference Template** - Use `ISSUES_TEMPLATE.md` for manual creation
 
-**Detailed instructions**: See [SETUP_GITHUB_ISSUES.md](SETUP_GITHUB_ISSUES.md)
+**Files:**
+- [github-issues-import.csv](github-issues-import.csv) - Ready-to-import CSV with all 148 issues
+- [CSV_IMPORT_GUIDE.md](CSV_IMPORT_GUIDE.md) - Detailed import instructions
+- [ISSUES_BREAKDOWN.md](ISSUES_BREAKDOWN.md) - Complete breakdown and statistics
 
 #### 2. View the Plan
 
@@ -94,17 +96,13 @@ Once issues are created, start with Phase 1: Project Setup & Infrastructure
 
 | File | Description |
 |------|-------------|
+| [github-issues-import.csv](github-issues-import.csv) | **Ready-to-import** CSV with all 148 issues |
+| [CSV_IMPORT_GUIDE.md](CSV_IMPORT_GUIDE.md) | Step-by-step guide for importing issues |
 | [ISSUES_TEMPLATE.md](ISSUES_TEMPLATE.md) | Complete list of all 148 issues with details |
+| [ISSUES_BREAKDOWN.md](ISSUES_BREAKDOWN.md) | Statistics and breakdown by phase |
 | [GITHUB_ISSUES_SUMMARY.md](GITHUB_ISSUES_SUMMARY.md) | Project overview and statistics |
+| [PROJECT_SUMMARY.md](PROJECT_SUMMARY.md) | Comprehensive project summary |
 | [SETUP_GITHUB_ISSUES.md](SETUP_GITHUB_ISSUES.md) | Setup guide with troubleshooting |
-
-## 🛠️ Scripts
-
-| Script | Description |
-|--------|-------------|
-| `create-issues.sh` | **Recommended** - Easy wrapper script using env variables |
-| `create-all-github-issues.sh` | Full automation using GitHub REST API |
-| `create-issues-with-gh.sh` | Alternative using GitHub CLI |
 
 ## 📊 Project Statistics
 
@@ -205,6 +203,6 @@ MIT License - see [LICENSE](LICENSE) file for details
 
 ---
 
-**Status**: 🚧 Planning Phase - Issues and milestones being created
+**Status**: 🚧 Planning Phase - Ready to import issues
 
-**Next Steps**: Run `./create-issues.sh` to set up the GitHub project board!
+**Next Steps**: Import issues using `github-issues-import.csv` - See [CSV_IMPORT_GUIDE.md](CSV_IMPORT_GUIDE.md) for instructions!

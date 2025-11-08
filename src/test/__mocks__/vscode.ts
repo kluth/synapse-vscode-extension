@@ -101,6 +101,41 @@ export class CompletionItem {
   }
 }
 
+export class MarkdownString {
+  value: string;
+  isTrusted?: boolean;
+  supportThemeIcons?: boolean;
+
+  constructor(value?: string) {
+    this.value = value || '';
+  }
+
+  appendText(value: string): MarkdownString {
+    this.value += value;
+    return this;
+  }
+
+  appendMarkdown(value: string): MarkdownString {
+    this.value += value;
+    return this;
+  }
+
+  appendCodeblock(value: string, language?: string): MarkdownString {
+    this.value += `\`\`\`${language || ''}\n${value}\n\`\`\``;
+    return this;
+  }
+}
+
+export class Hover {
+  contents: MarkdownString[];
+  range?: Range;
+
+  constructor(contents: MarkdownString | MarkdownString[], range?: Range) {
+    this.contents = Array.isArray(contents) ? contents : [contents];
+    this.range = range;
+  }
+}
+
 export const languages = {
   registerCompletionItemProvider: jest.fn(() => ({
     dispose: jest.fn(),

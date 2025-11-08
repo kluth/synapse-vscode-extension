@@ -8,3 +8,5 @@ export {
   createCompletionItem,
   getCompletionItems,
 } from './SynapseCompletionProvider';
+
+export { SynapseHoverProvider, getHoverInfo } from './SynapseHoverProvider';

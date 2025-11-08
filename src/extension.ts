@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import { registerHelloWorld } from './commands';
-import { SynapseCompletionProvider } from './providers';
+import { SynapseCompletionProvider, SynapseHoverProvider } from './providers';
 
 let outputChannel: vscode.OutputChannel;
 
@@ -31,6 +31,13 @@ export function activate(context: vscode.ExtensionContext): void {
       )
     );
     outputChannel.appendLine('Completion provider registered');
+
+    // Register hover provider for TypeScript and JavaScript
+    const hoverProvider = new SynapseHoverProvider();
+    context.subscriptions.push(
+      vscode.languages.registerHoverProvider(['typescript', 'javascript'], hoverProvider)
+    );
+    outputChannel.appendLine('Hover provider registered');
 
     const activationTime = Date.now() - startTime;
     outputChannel.appendLine(`Synapse extension activated successfully in ${activationTime}ms`);

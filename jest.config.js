@@ -32,4 +32,7 @@ module.exports = {
   },
   moduleFileExtensions: ['ts', 'js', 'json'],
   testPathIgnorePatterns: ['/node_modules/', '/out/', '/dist/'],
+  moduleNameMapper: {
+    '^vscode$': '<rootDir>/src/test/__mocks__/vscode.ts',
+  },
 };

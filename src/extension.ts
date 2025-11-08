@@ -16,7 +16,7 @@ export function activate(context: vscode.ExtensionContext): void {
     context.subscriptions.push(outputChannel);
 
     outputChannel.appendLine('Synapse extension is activating...');
-    console.log('Synapse extension is now active');
+    outputChannel.appendLine('Synapse extension is now active');
 
     // Register commands
     registerHelloWorld(context, outputChannel);
@@ -25,8 +25,8 @@ export function activate(context: vscode.ExtensionContext): void {
     outputChannel.appendLine(`Synapse extension activated successfully in ${activationTime}ms`);
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    console.error('Failed to activate Synapse extension:', errorMessage);
-    vscode.window.showErrorMessage(`Failed to activate Synapse extension: ${errorMessage}`);
+    outputChannel?.appendLine(`Failed to activate Synapse extension: ${errorMessage}`);
+    void vscode.window.showErrorMessage(`Failed to activate Synapse extension: ${errorMessage}`);
   }
 }
 

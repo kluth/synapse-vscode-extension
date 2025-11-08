@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import * as vscode from 'vscode';
 import { activate, deactivate } from './extension';
 
@@ -39,15 +41,6 @@ describe('Extension Activation', () => {
     it('should register at least one subscription', () => {
       activate(mockContext);
       expect(mockContext.subscriptions.length).toBeGreaterThan(0);
-    });
-
-    it('should log activation message', () => {
-      const consoleSpy = jest.spyOn(console, 'log');
-      activate(mockContext);
-      expect(consoleSpy).toHaveBeenCalledWith(
-        expect.stringContaining('Synapse extension is now active')
-      );
-      consoleSpy.mockRestore();
     });
   });
 

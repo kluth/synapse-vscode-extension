@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { registerHelloWorld } from './commands';
+import { SynapseCompletionProvider } from './providers';
 
 let outputChannel: vscode.OutputChannel;
 
@@ -20,6 +21,16 @@ export function activate(context: vscode.ExtensionContext): void {
 
     // Register commands
     registerHelloWorld(context, outputChannel);
+
+    // Register completion provider for TypeScript and JavaScript
+    const completionProvider = new SynapseCompletionProvider();
+    context.subscriptions.push(
+      vscode.languages.registerCompletionItemProvider(
+        ['typescript', 'javascript'],
+        completionProvider
+      )
+    );
+    outputChannel.appendLine('Completion provider registered');
 
     const activationTime = Date.now() - startTime;
     outputChannel.appendLine(`Synapse extension activated successfully in ${activationTime}ms`);

@@ -1,4 +1,10 @@
-// Barrel export for providers
-// Providers will be exported here as they are implemented
+/**
+ * Providers module
+ * Exports all provider-related functionality
+ */
 
-export {};
+export {
+  SynapseCompletionProvider,
+  createCompletionItem,
+  getCompletionItems,
+} from './SynapseCompletionProvider';

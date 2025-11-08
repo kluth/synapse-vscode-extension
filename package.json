@@ -47,6 +47,16 @@
         "command": "synapse.helloWorld",
         "title": "Synapse: Hello World"
       }
+    ],
+    "snippets": [
+      {
+        "language": "typescript",
+        "path": "./snippets/synapse.code-snippets"
+      },
+      {
+        "language": "javascript",
+        "path": "./snippets/synapse.code-snippets"
+      }
     ]
   },
   "scripts": {
